@@ -28,6 +28,10 @@ public class UserDetailsImpl implements UserDetails {
         return this.user.getId();
     }
 
+    public String getRolesWithNoBraces() {
+        return this.user.getRolesWithNoBraces();
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.user.getRoles();

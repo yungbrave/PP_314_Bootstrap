@@ -13,7 +13,6 @@ import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
-;import java.security.Principal;
 
 
 @Controller
@@ -34,7 +33,6 @@ public class AdminController {
     public String showUsers(Model model, @AuthenticationPrincipal UserDetailsImpl userDetails) {
         model.addAttribute("roles", roleService.findAll()); //все роли из БД
         model.addAttribute("users", userService.findAll()); //все юзеры из БД
-//        model.addAttribute("user", userService.findByUsername(principal.getName())); //авторизованный пользователь
         model.addAttribute("user", userDetails);
         model.addAttribute("emptyUser", new User());
         System.out.println("test");
@@ -43,7 +41,9 @@ public class AdminController {
 
     @GetMapping("/new")
     public String newUser(@ModelAttribute("user") User user,
+                          @AuthenticationPrincipal UserDetailsImpl userDetails,
                           Model model) {
+        model.addAttribute("user", userDetails);
         model.addAttribute("roles", roleService.findAll());
         return "admin/new";
     }

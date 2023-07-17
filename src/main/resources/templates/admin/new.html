@@ -20,7 +20,7 @@
                     <span class="navbar-brand mb-0 h2">with roles:</span>
                 </li>
                 <li class="nav-item">
-                    <span class="navbar-brand mb-0 h2" th:text="${user.getRoles()}">Roles</span>
+                    <span class="navbar-brand mb-0 h2" th:text="${user.getRolesWithNoBraces()}">Roles</span>
                 </li>
             </ul>
         </div>
@@ -45,7 +45,7 @@
                         <input type="submit" class="btn btn-light" value="Users table">
                     </form>
                     <form th:method="GET" th:action="@{/admin/new}">
-                        <input type="submit" class="btn btn-light active" value="New user">
+                        <input type="submit" class="btn btn-dark active" value="New user">
                     </form>
                 </div>
                 <table class="table table-bordered">
@@ -82,7 +82,7 @@
                                         <label class="form-check-label" for="roles"
                                                th:text="${role.getName()}">Role</label>
                                     </div>
-                                    <button type="submit" class="btn btn-success">Add new user</button>
+                                        <button type="submit" class="btn btn-success">Add new user</button>
                                 </form>
                             </div>
                         </td>
