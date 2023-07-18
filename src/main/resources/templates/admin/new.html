@@ -9,9 +9,13 @@
           crossorigin="anonymous">
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark border-bottom-dark">
+
+<!--Heading (navbar)-->
+<nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #3C3F42">
     <div class="container-fluid">
         <div class="collapse navbar-collapse" id="navbarText">
+
+            <!--Authenticated user info-->
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
                     <span class="navbar-brand mb-0 h1" th:text="${user.getEmail()}">Email</span>
@@ -24,30 +28,48 @@
                 </li>
             </ul>
         </div>
-        <form th:method="GET" th:action="@{/logout}">
-            <input style="color: gray  " class="nav-link" type="submit" value="Logout">
-        </form>
+
+        <!--Logout-->
+        <div class="navbar-nav ms-auto mb-2 mb-lg-0">
+            <a style="color: #808080" th:href="@{/logout}" class="nav-link">Logout</a>
+        </div>
+
     </div>
 </nav>
 
 <div class="container-fluid">
     <div class="row">
+
+        <!--Sidebar-->
         <div class="col px-0">
             <div class="d-flex flex-column pt-2">
-                <span class="btn btn-primary">User</span>
+                <div class="list-group list-group-flush">
+                    <a href="#" class="list-group-item list-group-item-action active" aria-current="true">
+                        Admin
+                    </a>
+                    <a th:href="@{/user}" class="list-group-item list-group-item-action">User</a>
+                </div>
             </div>
         </div>
-        <div class="col-11 px-0">
-            <div class="col bg-light">
+
+        <div class="col-11 px-5 bg-body-secondary">
+            <div class="col bg-light bg-body-secondary">
+
                 <p class="h1">Admin panel</p>
-                <div class="btn-group">
-                    <form th:method="GET" th:action="@{/admin}">
-                        <input type="submit" class="btn btn-light" value="Users table">
-                    </form>
-                    <form th:method="GET" th:action="@{/admin/new}">
-                        <input type="submit" class="btn btn-dark active" value="New user">
-                    </form>
+
+                <!--Toolbar: users table and new user-->
+                <div class="btn-toolbar" role="toolbar" aria-label="Toolbar with button groups">
+                    <div class="btn-group me-2" role="group" aria-label="First group">
+                        <form th:method="GET" th:action="@{/admin}">
+                            <input type="submit" class="btn btn-light" value="Users table">
+                        </form>
+                        <form th:method="GET" th:action="@{/admin/new}">
+                            <input type="submit" class="btn btn-light active" value="New user">
+                        </form>
+                    </div>
                 </div>
+
+                <!--Main content-->
                 <table class="table table-bordered">
                     <thead>
                     <tr class="table-active">
@@ -58,32 +80,76 @@
                     <tbody>
                     <tr>
                         <td>
+
+                            <!--Form to add new user-->
                             <div class="container">
 
+
                                 <form th:method="POST" th:action="@{/admin}">
-                                    <div class="mb-3">
-                                        <label for="username" class="form-label">Username</label>
-                                        <input type="text" class="form-control" id="username"
-                                               th:field="*{user.username}">
+
+                                    <div class="row g-3 align-items-center text-center">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="username" class="form-label fw-bold">Username</label>
+                                                <input type="text" class="form-control" id="username"
+                                                       th:field="*{userNew.username}" placeholder="Username">
+                                            </div>
+                                        </div>
+
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="email" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="email"
-                                               th:field="*{user.email}">
+
+                                    <div class="row g-3 align-items-center text-center">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="email" class="form-label fw-bold">Email</label>
+                                                <input type="email" class="form-control" id="email"
+                                                       th:field="*{userNew.email}" placeholder="Email">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="mb-3">
-                                        <label for="password" class="form-label">Password</label>
-                                        <input type="password" class="form-control" id="password"
-                                               th:field="*{user.password}">
+
+                                    <div class="row g-3 align-items-center text-center">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mb-3">
+                                                <label for="password" class="form-label fw-bold">Password</label>
+                                                <input type="password" class="form-control" id="password"
+                                                       th:field="*{userNew.password}" placeholder="Password">
+                                            </div>
+                                        </div>
                                     </div>
-                                    <div class="form-check" th:each="role: ${roles}">
-                                        <input class="form-check-input" type="checkbox" id="roles"
-                                               th:value="${role}" th:field="${user.roles}">
-                                        <label class="form-check-label" for="roles"
-                                               th:text="${role.getName()}">Role</label>
+
+                                    <div class="row g-3 align-items-center text-center">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="form-check" th:each="role: ${roles}">
+                                                <input class="form-check-input" type="checkbox" id="roles"
+                                                       th:value="${role}" th:field="${user.roles}">
+                                                <label class="form-check-label fw-bold" for="roles"
+                                                       th:text="${role.getName()}">Role</label>
+                                            </div>
+                                        </div>
                                     </div>
-                                        <button type="submit" class="btn btn-success">Add new user</button>
+
+                                    <div class="row g-3 align-items-center text-center">
+                                        <div class="col-4">
+                                        </div>
+                                        <div class="col-3">
+                                            <div class="mt-2">
+                                                <button type="submit" class="btn btn-success btn-lg">Add new user
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </form>
+
                             </div>
                         </td>
                     </tr>

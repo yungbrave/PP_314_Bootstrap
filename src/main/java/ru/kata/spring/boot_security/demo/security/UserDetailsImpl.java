@@ -6,7 +6,7 @@ import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 
 import java.util.Collection;
-import java.util.List;
+import java.util.Set;
 
 public class UserDetailsImpl implements UserDetails {
 
@@ -20,7 +20,7 @@ public class UserDetailsImpl implements UserDetails {
         return this.user.getEmail();
     }
 
-    public List<Role> getRoles() {
+    public Set<Role> getRoles() {
         return this.user.getRoles();
     }
 

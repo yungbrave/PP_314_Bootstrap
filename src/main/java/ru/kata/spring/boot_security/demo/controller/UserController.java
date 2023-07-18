@@ -6,6 +6,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import ru.kata.spring.boot_security.demo.models.Role;
+import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.service.RoleService;
 import ru.kata.spring.boot_security.demo.service.UserService;
 
@@ -17,21 +19,20 @@ public class UserController {
 
     private final UserService userService;
 
-    private final RoleService roleService;
 
     @Autowired
-    public UserController(UserService userService, @Lazy RoleService roleService) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.roleService = roleService;
     }
 
     @GetMapping()
     public String showUser(Model model, Principal principal) {
-        String name = roleService.findAll().stream()
-                .map(role -> role.getName())
-                .filter(role_name -> role_name.equals("ROLE_ADMIN")).findFirst().orElse(null);
+        User user = userService.findByUsername(principal.getName());
+        String name = user.getRoles().stream()
+                .map(Role::getName)
+                .filter(role_name -> role_name.equals("ROLE_ADMIN")).findFirst().orElse("ROLE_USER");
         model.addAttribute("role_admin", name);
-        model.addAttribute("user", userService.findByUsername(principal.getName()));
+        model.addAttribute("user", user);
         return "user/show-user";
     }
 }

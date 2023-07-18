@@ -17,4 +17,6 @@ public interface UserService {
     void update(long id, User updatedUser);
 
     void delete(long id);
+
+    void setInitData();
 }

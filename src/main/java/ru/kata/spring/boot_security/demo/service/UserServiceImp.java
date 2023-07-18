@@ -8,10 +8,12 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ru.kata.spring.boot_security.demo.models.Role;
 import ru.kata.spring.boot_security.demo.models.User;
 import ru.kata.spring.boot_security.demo.repositories.UserRepository;
 import ru.kata.spring.boot_security.demo.security.UserDetailsImpl;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 
@@ -73,5 +75,24 @@ public class UserServiceImp implements UserService, UserDetailsService {
             throw new UsernameNotFoundException(String.format("User '%s' not found", username));
         }
         return new UserDetailsImpl(user.get());
+    }
+
+    @Transactional
+    public void setInitData() {
+        Role userRole = new Role("ROLE_USER");
+        Role adminRole = new Role("ROLE_ADMIN");
+        userRepository.save(new User("user",
+                "$2a$12$vSOELe0vyyH.tbMAtlcza.snVT24qZfM1oZaCdrp5bheIqqNR/nwy",
+                "user@gmail.com",
+                new HashSet<>() {{
+            add(userRole);
+        }}));
+        userRepository.save(new User("admin",
+                "$2a$12$vSOELe0vyyH.tbMAtlcza.snVT24qZfM1oZaCdrp5bheIqqNR/nwy",
+                "admin@gmail.com",
+                new HashSet<>() {{
+            add(userRole);
+            add(adminRole);
+        }}));
     }
 }

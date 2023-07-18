@@ -40,7 +40,7 @@ public class AdminController {
     }
 
     @GetMapping("/new")
-    public String newUser(@ModelAttribute("user") User user,
+    public String newUser(@ModelAttribute("userNew") User user,
                           @AuthenticationPrincipal UserDetailsImpl userDetails,
                           Model model) {
         model.addAttribute("user", userDetails);
